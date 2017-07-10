@@ -1,0 +1,11 @@
+CREATE TABLE CHICKEN(
+id INT AUTO_INCREMENT PRIMARY KEY,
+gender ENUM('m','f'),
+weight INT,
+age_on_jan INT,
+birth DATE);
+
+INSERT INTO chicken(gender, weight, age_on_jan, birth)
+VALUES('f', 5, 2, '2016-01-01'),
+('f',6,3,'2015-03-24');
+

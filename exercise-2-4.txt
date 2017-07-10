@@ -1,0 +1,7 @@
+hello this is a test
+from mySQL file, I use:
+-> create database decodemtl_test;
+-> create database decodemtl_addressbook;
+-> DROP DATABASE decodemtl_test;
+
+show databases;

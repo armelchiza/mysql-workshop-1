@@ -1,0 +1,4 @@
+CREATE TABLE Account (Id INT);
+CREATE TABLE AddressBook (id INT);
+CREATE TABLE Entry (Id INT);
+CREATE TABLE Test (Id INT);

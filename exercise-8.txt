@@ -1,0 +1,11 @@
+ALTER TABLE Account
+ADD AUTO_INCREMENT PRIMARY KEY (id);
+ALTER TABLE AddressBook
+ADD AUTO_INCREMENT PRIMARY KEY (id);
+ALTER TABLE Entry
+ADD AUTO_INCREMENT PRIMARY KEY (id);
+
+ALTER TABLE Entry
+ADD COLUMN type ENUM ('home','work','other');
+ALTER TABLE Entry
+ADD COLUMN subtype ENUM ('phone','address','email');
