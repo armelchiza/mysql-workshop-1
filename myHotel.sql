@@ -24,6 +24,7 @@ CREATE TABLE `rooms` (
     ,type ENUM('janitor closet', 'public laundry', 'gym', 'guests') -- NOT NULL
     , max_occup TINYINT(2)
     , free_after DATE
+    , windows TINYINT(2)
 );
 
 CREATE TABLE `floors` (
@@ -31,29 +32,28 @@ CREATE TABLE `floors` (
     , floor_name VARCHAR(15)
     , room_id INT
     , FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
-
 );
 
-INSERT INTO rooms(type, kitchen, carpets, max_occup, free_after)
+INSERT INTO rooms(type, kitchen, carpets, max_occup, free_after, windows)
   VALUES
-    ('gym', true, true, NULL, NULL)
-    ,('public laundry', false, true,  NULL, NULL)
-    ,('guests', false, 2, false, '2017-07-10')
-    ,('guests', false, 2, true, '2017-07-12')
-    ,('public laundry', false, true, NULL, NULL)
-    ,('guests', true, false, 5, '2017-07-10')
-    ,('guests', true, false, 2, '2017-07-12')
-    ,('public laundry', false, true, NULL, NULL)
-    ,('guests', false, true, 4, '2017-07-10')
-    ,('guests', false, false, 4, '2017-07-10')
-    ,('guests', false, false, 5, '2017-07-13')
-    ,('guests', false, false, 4, '2017-07-12')
-    ,('guests', false, false, 2, '2017-07-10')
-    ,('janitor closet', false, true, NULL, NULL)
-    ,('guests', true, 5, true, '2017-07-12')
-    ,('guests', true, 1, false, '2017-07-10')
-    ,('guests', true, 1, true, '2017-07-11')
-    ,('guests', true, 2, false, '2017-07-10')
+    ('gym', true, true, NULL, NULL, 1)
+    ,('public laundry', false, true,  NULL, NULL, 1)
+    ,('guests', false, false, 2, '2017-07-10', 2)
+    ,('guests', false, true, 2, '2017-07-12', 4)
+    ,('public laundry', false, true, NULL, NULL, 1)
+    ,('guests', true, false, 5, '2017-07-10', 1)
+    ,('guests', true, false, 2, '2017-07-12', 1)
+    ,('public laundry', false, true, NULL, NULL, 3)
+    ,('guests', false, true, 4, '2017-07-10', 4)
+    ,('guests', false, false, 4, '2017-07-10',5)
+    ,('guests', false, false, 5, '2017-07-13', 6)
+    ,('guests', false, false, 4, '2017-07-12', 1)
+    ,('guests', false, false, 2, '2017-07-10', 3)
+    ,('janitor closet', false, true, NULL, NULL, 2)
+    ,('guests', true, 5, true, '2017-07-12', 4)
+    ,('guests', true, 1, false, '2017-07-10', 1)
+    ,('guests', true, 1, true, '2017-07-11', 1)
+    ,('guests', true, 2, false, '2017-07-10', 2)
 ;
 
 
@@ -98,8 +98,10 @@ SELECT COUNT(*) FROM rooms WHERE type != 'guests';
 -- The amount of Rooms having a private Kitchen
 SELECT COUNT(*) FROM rooms WHERE kitchen = true;
 
--- -- The average amount of windows per Floor
--- SELECT AVG(windows) FROM floors;
---
--- -- The amount of Floors having Rooms with carpets
--- SELECT COUNT(*) FROM ()
+-- The average amount of windows per Floor
+SELECT AVG(windows) AS floor_average FROM rooms JOIN floors
+  ON (rooms.id = floors.room_id) GROUP BY floor_name;
+
+-- The amount of Floors having Rooms with carpets
+-- SELECT COUNT(*) FROM floors WHERE rooms JOIN floors
+--   ON (rooms.id = floors.room_id) AND ON rooms.carpets = true GROUP BY floor_name;
